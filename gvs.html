@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Research</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/sitelogo.png" alt="" /></span><span class="title">Home</span>
+								</a>
+
+							<!-- Nav -->
+							
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+							
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="https://jingtiangao.github.io/">Home</a></li>
+							<li><a href="https://jingtiangao.github.io/">Bio</a></li>
+							<li><a href="https://jingtiangao.github.io/">Publications</a></li>
+							<!-- <li><a href="elements.html">Elements</a></li> -->
+						</ul>
+					</nav>
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Experiment on Broadband Communication Network</h1>
+							
+							<p>Used Wireshark to analyze the number of URL first packets and RTT time. </p> 
+
+<p>Calculated the theoretical fastest time to transmit 128KB without server delay response (slow- start algorithm is exponential growth) under conditions of 50ms delay, no packet loss, jitter free network. </p> 
+
+<p>Used iptables to analyze characteristics of TCP retransmission timer respectively under the system of CENTOS-5, CENTOS-6, WIN7.• Used Dns Tunnel tool (like iodine) to traverse the campus gateway billing system to access Internet bypassing WEB portal authentication.</p> 
+
+							
+							<br/>
+							<p>Download wget for packet capture. wget is a free tool that automatically downloads files from the Internet. Download and unzip it from http://soft.hao123.com/soft/appid/8311.html and then locate it in D:\UnxUtils\usr\local\ Below wbin.</p>
+Use the command line cd D:\UnxUtils\usr\local\wbin to enter the directory and download URL1, URL2, URL3 in turn
+<p>1) Download url1 and capture the package</p>
+							
+							<img src="images/1.png">
+							<br/>
+							<p>Enter tcp.srcport==80 in the filter to filter out TCP protocol packets on port 80</p>
+                             <img src="images/2.png">
+                             <p>Close the dialog box, enter &&ip.src==server IP address after tcp.stream eq x in the filter, and capture the data packet returned by the server, as shown in the figure below. It can be seen from the figure that the RTT time is 3.4ms. The number of the first packet is 20. The first packet is the number of data packets sent by the server to the server within the next RTT after the handshake is successful, that is, after the first RTT establishes a connection.</p>
+                            <p> After using tcp.srcport==80 and tracking the stream, it was found that 302 hijacking occurred </p>
+							<img src="images/3.png">
+							<p>Delete the four 10.3.200.200 hijacked data packets counted down from the HTTP GET request packet (including it) in the red box in the red box below to block the 302 hijacking. </p>
+
+<p>Enter &&tcp.len>0||tcp.flags.syn==1 after tcp.stream eq x in the filter, filter out the data packet communication between this machine and url2, and count the first packet in the red box , The first package is 30</p>	
+							<img src="images/4.png">
+							
+							<img src="images/5.png">
+							
+							<img src="images/6.png">
+							<p>Delete the content in the red box to achieve filtering and hijacking</p>
+							<img src="images/7.png">
+							<p>Enter the filtering instruction, and then count the number of first packets as 22</p>
+							<img src="images/8.png">
+							
+							<p> In the vi editor, press the i key to enter the editing mode. There are two modes in vi: one is the editing mode and the other is the command mode. Click i to enter the edit mode from the command mode, and click the esc key to re-enter the command mode. We generally enter the edit mode to add, modify, and delete. But when we delete and modify too much content, we use the command line mode to modify, which is convenient and fast. In the command line, the four most commonly used commands are x, dd, u, p: x : Delete the current character; dd: delete the current line; u: restore the previous operation; p: copy the previously deleted line.
+After entering the editing mode, enter net.ipv4.tcp_syn_retries = 1, then press ESC to return to the command line mode, and hit: wq to save and exit.</p>
+							<img src="images/11.png">
+							<p>Configure the iptables firewall to filter syn, ack, use the command iptables -A INPUT -p tcp --tcp-flags SYN,ACK SYN,ACK -j DROP</p>
+							<img src="images/12.png">
+							<p>It can be seen that the number of retransmissions of CentOS-6 is 5, and the delay increases by 2 times each time according to the law of 1, 2, 4, 8, 16</p>
+							<img src="images/13.png">
+							<p></p>
+							<img src="images/14.png">
+							<p></p>
+							<img src="images/15.png">
+							<p>You can see that the retransmission delay rule of CentOS5 is 3 6 12 24 48 seconds, and the retransmission is 6 times.</p>
+							<img src="images/16.png">
+							<p>There are only two timeout retransmissions in Windows7, and the delay is 3 and 6 seconds respectively.</p>
+							<img src="images/17.png">
+
+							<p>Input command
+  iodine -r nsbroadband.strangled.net -P broad
+
+The following content appears, indicating that the DNS tunnel is open</p>
+							<img src="images/111.png">
+							
+							
+						</div>
+
+					</div>
+
+				<!-- Footer -->
+				<!--
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="field half first">
+										<input type="text" name="name" id="name" placeholder="Name" />
+									</div>
+									<div class="field half">
+										<input type="email" name="email" id="email" placeholder="Email" />
+									</div>
+									<div class="field">
+										<textarea name="message" id="message" placeholder="Message"></textarea>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="special" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+				-->
+					<footer>
+						<div class="inner">
+							
+							<ul class="copyright">
+								<li>&copy; chuyang gao. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+
+					</footer
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
